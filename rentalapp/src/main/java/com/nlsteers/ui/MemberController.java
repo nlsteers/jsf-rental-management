@@ -41,11 +41,11 @@ public class MemberController {
 
     public void preRenderViewEvent() {
         if (editMembers.getMember() == null) {
-            initializeEmployee();
+            initializeMember();
         }
     }
 
-    private void initializeEmployee() {
+    private void initializeMember() {
         if (editMembers.getMemberNumber() == null) {
             editMembers.setMember(new Member());
             return;
