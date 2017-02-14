@@ -1,0 +1,42 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://java.sun.com/jsf/html"
+        template="templates/base.xhtml">
+    <ui:param name="pageTitle" value="Member Create/Edit"/>
+
+    <ui:define name="content">
+
+
+        <f:metadata>
+            <f:viewParam name="memberNumber" value="#{editMembers.memberNumber}"/>
+            <f:event type="preRenderView" listener="#{memberController.preRenderViewEvent}"/>
+        </f:metadata>
+
+        <h:form id="frmMember">
+            <h:panelGrid columns="3">
+                <h:outputLabel for="memberNumber" value="Member Number"/>
+                <h:inputText id="memberNumber" value="#{editMembers.member.memberNo}" readonly="true"/>
+                <h:message for="memberNumber"/>
+
+                <h:outputLabel for="firstName" value="First Name"/>
+                <h:inputText id="firstName" value="#{editMembers.member.firstName}"/>
+                <h:message for="firstName"/>
+
+                <h:outputLabel for="lastName" value="Last Name"/>
+                <h:inputText id="lastName" value="#{editMembers.member.lastName}"/>
+                <h:message for="lastName"/>
+
+                <h:outputLabel for="joinDate" value="Join Date"/>
+                <h:inputText id="joinDate" value="#{editMembers.member.joinDate}">
+                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                </h:inputText>
+                <h:message for="joinDate"/>
+
+                <h:commandButton action="#{memberController.save}" value="Save"/>
+                <h:link outcome="cancel" value="Cancel"/>
+            </h:panelGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>
