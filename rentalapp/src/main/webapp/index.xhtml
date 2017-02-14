@@ -16,31 +16,38 @@
                     </h:inputText>
                     <h:message for="joinedAfter"/>
                     <h:commandButton value="Submit"/>
+                    <h:link value="New Member" outcome="member"/>
                 </h:panelGrid>
             </h:form>
             <p>Members:</p>
-            <h:dataTable value="#{members}" var="m">
-                <h:column>
-                    <f:facet name="header">Member No.</f:facet>
-                    <h:link value="#{m.memberNo}" outcome="member">
-                        <f:param name="memberNumber" value="#{m.memberNo}"/>
-                    </h:link>
-                </h:column>
-                <h:column>
-                    <f:facet name="header">First Name</f:facet>
-                    #{m.firstName}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Last Name</f:facet>
-                    #{m.lastName}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Join Date</f:facet>
-                    <h:outputText value="#{m.joinDate}">
-                        <f:convertDateTime pattern="dd/MM/yyyy"/>
-                    </h:outputText>
-                </h:column>
-            </h:dataTable>
+            <h:messages globalOnly="true" />
+            <h:form>
+                <h:dataTable value="#{members}" var="m">
+                    <h:column>
+                        <f:facet name="header">Member No.</f:facet>
+                        <h:link value="#{m.memberNo}" outcome="member">
+                            <f:param name="memberNumber" value="#{m.memberNo}"/>
+                        </h:link>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">First Name</f:facet>
+                        #{m.firstName}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Last Name</f:facet>
+                        #{m.lastName}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Join Date</f:facet>
+                        <h:outputText value="#{m.joinDate}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </h:column>
+                    <h:column>
+                        <h:commandLink action="#{memberController.remove(m)}" value="Delete"/>
+                    </h:column>
+                </h:dataTable>
+            </h:form>
         </div>
 
         <div style="width: 33%; float: left;">
