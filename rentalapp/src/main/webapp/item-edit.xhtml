@@ -1,0 +1,48 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        template="templates/base.xhtml">
+    <ui:param name="pageTitle" value="Item Create/Edit"/>
+
+    <ui:define name="content">
+
+        <f:metadata>
+            <f:viewParam name="itemNumber" value="#{editItems.itemNumber}"/>
+            <f:event type="preRenderView" listener="#{itemController.preRenderViewEvent}"/>
+        </f:metadata>
+
+        <h:form id="frmMember">
+            <p:panelGrid columns="3">
+                <p:outputLabel for="itemNumber" value="Item Number"/>
+                <p:inputText id="itemNumber" value="#{editItems.item.itemNo}" readonly="true"/>
+                <p:message for="itemNumber"/>
+
+                <p:outputLabel for="itemName" value="Item Name"/>
+                <p:inputText id="itemName" value="#{editItems.item.itemName}"/>
+                <p:message for="itemName"/>
+
+                <p:outputLabel for="itemType" value="Item Type"/>
+                <p:selectOneListbox id="itemType" value="#{editItems.item.itemType}">
+                    <f:selectItem itemLabel="Book" itemValue="Book"/>
+                    <f:selectItem itemLabel="TV" itemValue="TV"/>
+                    <f:selectItem itemLabel="Music" itemValue="Music"/>
+                    <f:selectItem itemLabel="Film" itemValue="Film"/>
+                </p:selectOneListbox>
+                <p:message for="itemType"/>
+
+
+
+
+                <p:outputLabel for="numberAvailable" value="Number Available"/>
+                <p:inputText id="numberAvailable" value="#{editItems.item.numberAvailable}"/>
+                <p:message for="numberAvailable"/>
+
+                <p:commandButton action="#{itemController.save}" value="Save"/>
+                <p:link outcome="cancel" value="Cancel"/>
+            </p:panelGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>

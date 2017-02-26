@@ -26,10 +26,6 @@ public class Member implements Serializable {
     @Column(name = "last_name", length = 50)
     private String lastName;
 
-    @Column(name = "join_date")
-    @Temporal(TemporalType.DATE)
-    private Date joinDate;
-
     public Integer getMemberNo() {
         return memberNo;
     }
@@ -54,13 +50,7 @@ public class Member implements Serializable {
         this.lastName = lastName;
     }
 
-    public Date getJoinDate() {
-        return joinDate;
-    }
 
-    public void setJoinDate(final Date joinDate) {
-        this.joinDate = joinDate;
-    }
 
 
 }

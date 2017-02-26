@@ -6,7 +6,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -43,12 +42,10 @@ public class MemberDAO {
         return query.getResultList();
     }
 
-    public List<Member> queryJoinedAfter(Date joinedAfter) {
+    public List<Member> queryNameSearch(String lastName) {
         TypedQuery<Member> query = entityManager
-                .createQuery("select e from Member e where e.joinDate >= :joinedAfter", Member.class);
-        query.setParameter("joinedAfter", joinedAfter);
+                .createQuery("select e from Member e where upper(e.lastName) = upper(:lastName)", Member.class);
+        query.setParameter("lastName", lastName);
         return query.getResultList();
     }
-
-
 }

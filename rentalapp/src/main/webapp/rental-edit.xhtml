@@ -1,0 +1,39 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://java.sun.com/jsf/html"
+        template="templates/base.xhtml">
+    <ui:param name="pageTitle" value="Item Create/Edit"/>
+
+    <ui:define name="content">
+
+        <f:metadata>
+            <f:viewParam name="itemNumber" value="#{editItems.itemNumber}"/>
+            <f:event type="preRenderView" listener="#{itemController.preRenderViewEvent}"/>
+        </f:metadata>
+
+        <h:form id="frmMember">
+            <h:panelGrid columns="3">
+                <h:outputLabel for="itemNumber" value="Item Number"/>
+                <h:inputText id="itemNumber" value="#{editItems.item.itemNo}" readonly="true"/>
+                <h:message for="itemNumber"/>
+
+                <h:outputLabel for="itemName" value="Item Name"/>
+                <h:inputText id="itemName" value="#{editItems.item.itemName}"/>
+                <h:message for="itemName"/>
+
+                <h:outputLabel for="itemType" value="Item Type"/>
+                <h:inputText id="itemType" value="#{editItems.item.itemType}"/>
+                <h:message for="itemType"/>
+
+                <h:outputLabel for="numberAvailable" value="Number Available"/>
+                <h:inputText id="numberAvailable" value="#{editItems.item.numberAvailable}"/>
+                <h:message for="numberAvailable"/>
+
+                <h:commandButton action="#{itemController.save}" value="Save"/>
+                <h:link outcome="cancel" value="Cancel"/>
+            </h:panelGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>

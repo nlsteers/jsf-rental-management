@@ -1,0 +1,37 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        template="templates/base.xhtml">
+    <ui:param name="pageTitle" value="Member Create/Edit"/>
+
+    <ui:define name="content">
+
+
+        <f:metadata>
+            <f:viewParam name="memberNumber" value="#{editMembers.memberNumber}"/>
+            <f:event type="preRenderView" listener="#{memberController.preRenderViewEvent}"/>
+        </f:metadata>
+
+        <h:form id="frmMember">
+            <p:panelGrid columns="3">
+                <p:outputLabel for="memberNumber" value="Member Number"/>
+                <p:inputText id="memberNumber" value="#{editMembers.member.memberNo}" readonly="true"/>
+                <p:message for="memberNumber"/>
+
+                <p:outputLabel for="firstName" value="First Name"/>
+                <p:inputText id="firstName" value="#{editMembers.member.firstName}"/>
+                <p:message for="firstName"/>
+
+                <p:outputLabel for="lastName" value="Last Name"/>
+                <p:inputText id="lastName" value="#{editMembers.member.lastName}"/>
+                <p:message for="lastName"/>
+
+                <p:commandButton action="#{memberController.save}" value="Save"/>
+                <p:link outcome="cancel" value="Cancel"/>
+            </p:panelGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -7,16 +7,33 @@
 
     <!-- Member Edit Page -->
     <navigation-rule>
-        <from-view-id>/member.xhtml</from-view-id>
+        <from-view-id>/member-edit.xhtml</from-view-id>
         <navigation-case>
             <from-action>#{memberController.save}</from-action>
             <if>#{not facesContext.isValidationFailed()}</if>
-            <to-view-id>/index.xhtml</to-view-id>
+            <to-view-id>/member.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case>
             <from-outcome>cancel</from-outcome>
-            <to-view-id>/index.xhtml</to-view-id>
+            <to-view-id>/member.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+
+    <!-- Item Edit Page -->
+    <navigation-rule>
+        <from-view-id>/item-edit.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{itemController.save}</from-action>
+            <if>#{not facesContext.isValidationFailed()}</if>
+            <to-view-id>/item.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>cancel</from-outcome>
+            <to-view-id>/item.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
     </navigation-rule>

@@ -11,16 +11,15 @@ import java.util.Date;
 
 @SessionScoped
 @Named
-public class SearchMembers implements Serializable{
+public class SearchMembers implements Serializable {
 
-    private Date joinedAfter;
+    private String lastNameSearch;
 
-    public Date getJoinedAfter() {
-        return joinedAfter;
+    public String getLastName() {
+        return lastNameSearch;
     }
 
-    public void setJoinedAfter(final Date joinedAfter) {
-        this.joinedAfter = joinedAfter;
+    public void setLastName(String lastName) {
+        this.lastNameSearch = lastName;
     }
-
 }

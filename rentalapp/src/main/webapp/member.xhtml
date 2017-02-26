@@ -3,40 +3,50 @@
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
         template="templates/base.xhtml">
-    <ui:param name="pageTitle" value="Member Create/Edit"/>
+    <ui:param name="pageTitle" value="Members"/>
 
     <ui:define name="content">
 
+        <p:growl id="ui-messages" globalOnly="true"/>
 
-        <f:metadata>
-            <f:viewParam name="memberNumber" value="#{editMembers.memberNumber}"/>
-            <f:event type="preRenderView" listener="#{memberController.preRenderViewEvent}"/>
-        </f:metadata>
-
-        <h:form id="frmMember">
-            <h:panelGrid columns="3">
-                <h:outputLabel for="memberNumber" value="Member Number"/>
-                <h:inputText id="memberNumber" value="#{editMembers.member.memberNo}" readonly="true"/>
-                <h:message for="memberNumber"/>
-
-                <h:outputLabel for="firstName" value="First Name"/>
-                <h:inputText id="firstName" value="#{editMembers.member.firstName}"/>
-                <h:message for="firstName"/>
-
-                <h:outputLabel for="lastName" value="Last Name"/>
-                <h:inputText id="lastName" value="#{editMembers.member.lastName}"/>
-                <h:message for="lastName"/>
-
-                <h:outputLabel for="joinDate" value="Join Date"/>
-                <h:inputText id="joinDate" value="#{editMembers.member.joinDate}">
-                    <f:convertDateTime pattern="dd/MM/yyyy"/>
-                </h:inputText>
-                <h:message for="joinDate"/>
-
-                <h:commandButton action="#{memberController.save}" value="Save"/>
-                <h:link outcome="cancel" value="Cancel"/>
-            </h:panelGrid>
-        </h:form>
+        <div style="width: 100%; float: left;">
+            <h3>Member manager</h3>
+            <hr/>
+            <h:form>
+                <h:panelGrid columns="3">
+                    <p:outputLabel for="lastName" value="Search by last name: "/>
+                    <p:inputText id="lastName" value="#{searchMembers.lastName}" navigator="true"
+                                 converterMessage="Please enter a name.">
+                    </p:inputText>
+                    <p:message for="lastName"/>
+                    <p:button value="New Member" outcome="member-edit"/>
+                </h:panelGrid>
+            </h:form>
+            <h:form id="frmMembers">
+                <p:dataTable value="#{searchedLastName}" var="m" rows="15" paginator="true">
+                    <p:column>
+                        <f:facet name="header">Member No.</f:facet>
+                        <p:link value="#{m.memberNo}" outcome="member-edit">
+                            <f:param name="memberNumber" value="#{m.memberNo}"/>
+                        </p:link>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">First Name</f:facet>
+                        #{m.firstName}
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Last Name</f:facet>
+                        #{m.lastName}
+                    </p:column>
+                    <p:column width="80" style="text-align: center">
+                        <p:commandButton action="#{memberController.remove(m)}" icon="ui-icon-trash"
+                                         update="@form :ui-messages"
+                                         style="width: 24px; height: 24px"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </div>
     </ui:define>
 </ui:composition>

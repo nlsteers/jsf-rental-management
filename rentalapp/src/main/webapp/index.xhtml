@@ -3,121 +3,54 @@
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
         template="templates/base.xhtml">
-    <ui:param name="pageTitle" value="Home"/>
+    <ui:param name="pageTitle" value="Rentals"/>
     <ui:define name="content">
-        <div style="width: 33%; float: left;">
+
+
+        <div style="width: 100%; float: left;">
+            <h3>Rental history</h3>
+            <hr/>
             <h:form>
                 <h:panelGrid columns="3">
-                    <h:outputLabel for="joinedAfter" value="Joined After:"/>
-                    <h:inputText id="joinedAfter" value="#{searchMembers.joinedAfter}"
-                                 converterMessage="Please enter a valid date. For example 28/12/2016.">
+                    <p:outputLabel for="transactionDate" value="Transaction After:"/>
+                    <p:calendar id="transactionDate" value="#{searchTransactions.transactionDate}"
+                                pattern="dd/MM/yyyy" navigator="true"
+                                converterMessage="Please enter a valid date. For example 28/12/2016.">
                         <f:convertDateTime pattern="dd/MM/yyyy"/>
-                    </h:inputText>
-                    <h:message for="joinedAfter"/>
-                    <h:commandButton value="Submit"/>
-                    <h:link value="New Member" outcome="member"/>
+                        <p:ajax event="dateSelect" update=":frmTransactions @form"/>
+                    </p:calendar>
+                    <p:message for="transactionDate"/>
+                    <p:button value="New Rental" outcome="rental-edit"/>
                 </h:panelGrid>
             </h:form>
-            <p>Members:</p>
-            <h:messages globalOnly="true" />
-            <h:form>
-                <h:dataTable value="#{members}" var="m">
-                    <h:column>
+
+            <h:form id="frmTransactions">
+
+                <p:dataTable value="#{transactions}" var="t" rows="10" paginator="true">
+                    <p:column>
+                        <f:facet name="header">Transaction No.</f:facet>
+                        #{t.transactionNo}
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Item No.</f:facet>
+                        #{t.itemNo}
+                    </p:column>
+                    <p:column>
                         <f:facet name="header">Member No.</f:facet>
-                        <h:link value="#{m.memberNo}" outcome="member">
-                            <f:param name="memberNumber" value="#{m.memberNo}"/>
-                        </h:link>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">First Name</f:facet>
-                        #{m.firstName}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Last Name</f:facet>
-                        #{m.lastName}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Join Date</f:facet>
-                        <h:outputText value="#{m.joinDate}">
+                        #{t.memberNo}
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Transaction Date</f:facet>
+                        <h:outputText value="#{t.transactionDate}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </h:outputText>
-                    </h:column>
-                    <h:column>
-                        <h:commandLink action="#{memberController.remove(m)}" value="Delete"/>
-                    </h:column>
-                </h:dataTable>
+                    </p:column>
+                </p:dataTable>
             </h:form>
         </div>
 
-        <div style="width: 33%; float: left;">
-            <h:form>
-                <h:panelGrid columns="3">
-                    <h:outputLabel for="transactionDate" value="Transaction After:"/>
-                    <h:inputText id="transactionDate" value="#{searchTransactions.transactionDate}"
-                                 converterMessage="Please enter a valid date. For example 28/12/2016.">
-                        <f:convertDateTime pattern="dd/MM/yyyy"/>
-                    </h:inputText>
-                    <h:message for="transactionDate"/>
-                    <h:commandButton value="Submit"/>
-                </h:panelGrid>
-            </h:form>
-            <p>Transactions:</p>
-            <h:dataTable value="#{transactions}" var="t">
-                <h:column>
-                    <f:facet name="header">Transaction No.</f:facet>
-                    #{t.transactionNo}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Item No.</f:facet>
-                    #{t.itemNo}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Member No.</f:facet>
-                    #{t.memberNo}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Transaction Date</f:facet>
-                    <h:outputText value="#{t.transactionDate}">
-                        <f:convertDateTime pattern="dd/MM/yyyy"/>
-                    </h:outputText>
-                </h:column>
-            </h:dataTable>
-        </div>
 
-        <div style="width: 33%; float: left;">
-            <h:form>
-                <h:panelGrid columns="3">
-                    <h:outputLabel for="itemType" value="Item Type:"/>
-                    <h:selectOneListbox id="itemType" value="#{searchItems.itemType}">
-                        <f:selectItem itemLabel="All" itemValue="All"/>
-                        <f:selectItem itemLabel="Book" itemValue="Book"/>
-                        <f:selectItem itemLabel="TV" itemValue="TV"/>
-                        <f:selectItem itemLabel="Music" itemValue="Music"/>
-                        <f:selectItem itemLabel="Film" itemValue="Film"/>
-                    </h:selectOneListbox>
-                    <h:message for="itemType"/>
-                    <h:commandButton value="Submit"/>
-                </h:panelGrid>
-            </h:form>
-            <p>Items:</p>
-            <h:dataTable value="#{items}" var="i">
-                <h:column>
-                    <f:facet name="header">Item No.</f:facet>
-                    #{i.itemNo}</h:column>
-                <h:column>
-                    <f:facet name="header">Item Name</f:facet>
-                    #{i.itemName}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Item Type</f:facet>
-                    #{i.itemType}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">No. Available</f:facet>
-                    #{i.numberAvailable}
-                </h:column>
-            </h:dataTable>
-        </div>
     </ui:define>
 </ui:composition>
