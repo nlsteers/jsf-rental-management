@@ -2,6 +2,7 @@ package com.nlsteers.ui;
 
 /**
  * Created by nlsteers on 06/02/2017.
+ * DAAODSAA
  */
 
 
@@ -22,6 +23,8 @@ import java.util.List;
 
 /**
  * Controller for the Member UI page
+ * Created by nlsteers on 07/02/2017.
+ * DAAODSAA
  */
 @RequestScoped
 @Named

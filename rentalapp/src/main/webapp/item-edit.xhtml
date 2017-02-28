@@ -14,7 +14,7 @@
             <f:event type="preRenderView" listener="#{itemController.preRenderViewEvent}"/>
         </f:metadata>
 
-        <h:form id="frmMember">
+        <h:form id="frmItem">
             <p:panelGrid columns="3">
                 <p:outputLabel for="itemNumber" value="Item Number"/>
                 <p:inputText id="itemNumber" value="#{editItems.item.itemNo}" readonly="true"/>
@@ -33,15 +33,12 @@
                 </p:selectOneListbox>
                 <p:message for="itemType"/>
 
-
-
-
                 <p:outputLabel for="numberAvailable" value="Number Available"/>
                 <p:inputText id="numberAvailable" value="#{editItems.item.numberAvailable}"/>
                 <p:message for="numberAvailable"/>
 
-                <p:commandButton action="#{itemController.save}" value="Save"/>
-                <p:link outcome="cancel" value="Cancel"/>
+                <p:commandButton action="#{itemController.save}" value="Save" icon="ui-icon-check" />
+                <p:button outcome="cancel" value="Cancel" icon="ui-icon-close" />
             </p:panelGrid>
         </h:form>
     </ui:define>

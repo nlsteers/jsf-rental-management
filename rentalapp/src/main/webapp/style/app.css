@@ -1,10 +1,17 @@
 table{
     border-collapse: collapse;
+    border: none;
+
 }
 
-table td, table th {
+table td, table th, table tr {
     padding: 4px;
-    border: 1px solid #CCC;
+    border: none;
+}
+
+.ui-panelgrid td, .ui-panelgrid tr
+{
+    border-style: none !important
 }
 
 body{

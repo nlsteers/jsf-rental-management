@@ -8,6 +8,8 @@
     <ui:param name="pageTitle" value="Rentals"/>
     <ui:define name="content">
 
+        <p:growl id="ui-messages" globalOnly="true"/>
+
 
         <div style="width: 100%; float: left;">
             <h3>Rental history</h3>
@@ -22,13 +24,12 @@
                         <p:ajax event="dateSelect" update=":frmTransactions @form"/>
                     </p:calendar>
                     <p:message for="transactionDate"/>
-                    <p:button value="New Rental" outcome="rental-edit"/>
+                    <p:button value="New Rental" outcome="rental-new"/>
                 </h:panelGrid>
             </h:form>
 
             <h:form id="frmTransactions">
-
-                <p:dataTable value="#{transactions}" var="t" rows="10" paginator="true">
+                <p:dataTable value="#{transactions}" var="t" rows="15" paginator="true">
                     <p:column>
                         <f:facet name="header">Transaction No.</f:facet>
                         #{t.transactionNo}
@@ -46,6 +47,17 @@
                         <h:outputText value="#{t.transactionDate}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </h:outputText>
+                    </p:column>
+                    <p:column width="80" style="text-align: center">
+                        <p:commandButton action="#{transactionController.remove(t)}" icon="ui-icon-trash"
+                                         update="@form :ui-messages"
+                                         style="width: 24px; height: 24px">
+                            <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+                        </p:commandButton>
                     </p:column>
                 </p:dataTable>
             </h:form>

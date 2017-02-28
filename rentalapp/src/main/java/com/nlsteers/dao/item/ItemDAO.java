@@ -5,11 +5,13 @@ import com.nlsteers.Item;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
  * Created by nlsteers on 10/02/2017.
+ * DAAODSAA
  */
 
 @Stateless
@@ -39,6 +41,24 @@ public class ItemDAO {
         TypedQuery<Item> query = entityManager
                 .createQuery("select e from Item e", Item.class);
         return query.getResultList();
+    }
+
+    public List<Item> queryAvailable() {
+        TypedQuery<Item> query = entityManager
+                .createQuery("select e from Item e where e.numberAvailable > 0", Item.class);
+        return query.getResultList();
+    }
+
+    public void queryUpdate(Integer itemNum, Boolean decrement) {
+        if(!decrement) {
+            Query q = entityManager.createQuery("UPDATE Item SET numberAvailable = numberAvailable + 1 WHERE itemNo = :itemNum");
+            q.setParameter("itemNum", itemNum);
+            q.executeUpdate();
+        } else {
+            Query q = entityManager.createQuery("UPDATE Item SET numberAvailable = numberAvailable - 1 WHERE itemNo = :itemNum AND numberAvailable > 0");
+            q.setParameter("itemNum", itemNum);
+            q.executeUpdate();
+        }
     }
 
     public List<Item> queryItemType(String itemType) {

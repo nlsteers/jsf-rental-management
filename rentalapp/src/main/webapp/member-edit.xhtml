@@ -29,8 +29,9 @@
                 <p:inputText id="lastName" value="#{editMembers.member.lastName}"/>
                 <p:message for="lastName"/>
 
-                <p:commandButton action="#{memberController.save}" value="Save"/>
-                <p:link outcome="cancel" value="Cancel"/>
+                <p:commandButton action="#{memberController.save}" value="Save" icon="ui-icon-check" />
+                <p:button outcome="cancel" value="Cancel" icon="ui-icon-close" />
+
             </p:panelGrid>
         </h:form>
     </ui:define>

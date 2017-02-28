@@ -38,4 +38,21 @@
         </navigation-case>
     </navigation-rule>
 
+
+    <!-- Rental New Page -->
+    <navigation-rule>
+        <from-view-id>/rental-new.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{transactionController.save}</from-action>
+            <if>#{not facesContext.isValidationFailed()}</if>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>cancel</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
 </faces-config>

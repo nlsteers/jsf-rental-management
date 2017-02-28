@@ -1,15 +1,12 @@
 package com.nlsteers;
 
-/**
- * Created by nlsteers on 05/02/2017.
- */
-
-
 import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * Transaction JPA entity.
+ * Item JPA entity.
+ * Created by nlsteers on 07/02/2017.
+ * DAAODSAA
  */
 
 @Entity

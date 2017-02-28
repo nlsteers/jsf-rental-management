@@ -1,6 +1,7 @@
 package com.nlsteers.ui;
 
 import com.nlsteers.Item;
+import com.nlsteers.SimpleItem;
 import com.nlsteers.dao.item.ItemDAO;
 import com.nlsteers.ui.item.EditItems;
 import com.nlsteers.ui.item.SearchItems;
@@ -14,11 +15,9 @@ import javax.inject.Named;
 import java.util.List;
 
 /**
- * Created by nlsteers on 07/02/2017.
- */
-
-/**
  * Controller for the Item UI page
+ * * Created by nlsteers on 07/02/2017.
+ * DAAODSAA
  */
 @RequestScoped
 @Named
@@ -75,6 +74,8 @@ public class ItemController {
             return itemDAO.queryItemType(searchItems.getItemType());
         }
     }
+
+
 
 
 }

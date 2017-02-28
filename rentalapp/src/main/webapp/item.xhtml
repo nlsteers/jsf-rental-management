@@ -23,6 +23,7 @@
                         <f:selectItem itemLabel="TV" itemValue="TV"/>
                         <f:selectItem itemLabel="Music" itemValue="Music"/>
                         <f:selectItem itemLabel="Film" itemValue="Film"/>
+                        <f:selectItem itemLabel="Game" itemValue="Game"/>
                     </p:selectOneListbox>
                     <p:commandButton value="Submit" update=":frmItems"/>
                     <p:button value="New Item" outcome="item-edit"/>
@@ -31,7 +32,7 @@
 
             <h:form id="frmItems">
 
-                <p:dataTable value="#{items}" var="i" rows="30" paginator="true">
+                <p:dataTable value="#{items}" var="i" rows="15" paginator="true">
                     <p:column>
                         <f:facet name="header">Item No.</f:facet>
                         <h:link value="#{i.itemNo}" outcome="item-edit">
