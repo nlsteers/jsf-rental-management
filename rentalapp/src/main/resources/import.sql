@@ -49,4 +49,4 @@ INSERT INTO transaction (transaction_no, item_number, member_number, transaction
 INSERT INTO transaction (transaction_no, item_number, member_number, transaction_date) VALUES (000008,1109,11079,'2016-12-05');
 INSERT INTO transaction (transaction_no, item_number, member_number, transaction_date) VALUES (000009,1109,11079,'2016-12-05');
 INSERT INTO transaction (transaction_no, item_number, member_number, transaction_date) VALUES (000010,1214,11092,'2016-12-05');
-UPDATE item SET number_available = number_available - 1 WHERE item_no = 1342 AND number_available > 0;
+INSERT INTO transaction (transaction_no, item_number, member_number, transaction_date) VALUES (000011,1214,11092,'2017-03-05');

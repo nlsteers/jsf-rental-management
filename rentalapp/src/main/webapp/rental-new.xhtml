@@ -19,7 +19,7 @@
                 <p:outputLabel for="transactionNumber" value="Transaction Number"/>
                 <p:inputText id="transactionNumber" value="#{editTransactions.transaction.transactionNo}" readonly="true"/>
 
-                <p:outputLabel for="itemNumber" value="Select an Item"/>
+                <p:outputLabel for="itemNumber" value="Select an available Item"/>
                 <p:selectOneListbox id="itemNumber" value="#{editTransactions.transaction.itemNo}">
                     <f:selectItems value="#{transactionController.itemNamesAndNumbers}"/>
                 </p:selectOneListbox>

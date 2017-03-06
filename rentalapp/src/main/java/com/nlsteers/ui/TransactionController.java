@@ -1,9 +1,6 @@
 package com.nlsteers.ui;
 
-import com.nlsteers.Item;
-import com.nlsteers.Member;
-import com.nlsteers.SimpleItem;
-import com.nlsteers.Transaction;
+import com.nlsteers.*;
 import com.nlsteers.dao.item.ItemDAO;
 import com.nlsteers.dao.member.MemberDAO;
 import com.nlsteers.dao.transaction.TransactionDAO;
@@ -19,7 +16,9 @@ import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by nlsteers on 13/02/2017.
@@ -49,13 +48,44 @@ public class TransactionController {
     EditTransactions editTransactions;
 
     public void save() {
-        Boolean dec = true;
-        itemDAO.queryUpdate(editTransactions.getTransaction().getItemNo(), dec);
-        transactionDAO.merge(editTransactions.getTransaction());
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.getExternalContext().getFlash().setKeepMessages(true);
-        context.addMessage(null, new FacesMessage("Successfully created transaction"));
+
+        if(checkForDoubles() == 0){
+            Boolean dec = true;
+            itemDAO.queryUpdate(editTransactions.getTransaction().getItemNo(), dec);
+            transactionDAO.merge(editTransactions.getTransaction());
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.getExternalContext().getFlash().setKeepMessages(true);
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success","Transaction added"));
+        } else if (checkForDoubles() ==  -1){
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.getExternalContext().getFlash().setKeepMessages(true);
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error creating transaction","The same user cannot check out the same item more than once a week"));
+        }
+
     }
+
+    private int checkForDoubles(){
+
+        List<Transaction> transactionList = transactionDAO.queryLastSevenDays();
+
+        List<SimpleTransaction> simpleTransactions = new ArrayList<SimpleTransaction>();
+
+        for(Transaction t: transactionList){
+            simpleTransactions.add(new SimpleTransaction(t.getItemNo(), t.getMemberNo()));
+        }
+
+        SimpleTransaction stToAdd = new SimpleTransaction(editTransactions.getTransaction().getItemNo(), editTransactions.getTransaction().getMemberNo());
+
+        for(SimpleTransaction st: simpleTransactions){
+
+            if (st.getItemNo().equals(stToAdd.getItemNo()) && st.getMemberNo().equals(stToAdd.getMemberNo())){
+                System.out.println("There are duplicates.");
+                return -1;
+            }
+        }
+        return 0;
+    }
+
 
     public void remove(Transaction t) {
         Boolean dec = false;
