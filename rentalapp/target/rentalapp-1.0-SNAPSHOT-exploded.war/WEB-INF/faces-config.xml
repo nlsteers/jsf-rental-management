@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+              version="2.0">
+
+    <!-- Member Edit Page -->
+    <navigation-rule>
+        <from-view-id>/member-edit.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{memberController.save}</from-action>
+            <if>#{not facesContext.isValidationFailed()}</if>
+            <to-view-id>/member.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>cancel</from-outcome>
+            <to-view-id>/member.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+
+    <!-- Item Edit Page -->
+    <navigation-rule>
+        <from-view-id>/item-edit.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{itemController.save}</from-action>
+            <if>#{not facesContext.isValidationFailed()}</if>
+            <to-view-id>/item.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>cancel</from-outcome>
+            <to-view-id>/item.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+
+    <!-- Rental New Page -->
+    <navigation-rule>
+        <from-view-id>/rental-new.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{transactionController.save}</from-action>
+            <if>#{not facesContext.isValidationFailed()}</if>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>request</from-outcome>
+            <to-view-id>/rental-request.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>cancel</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+
+    <!-- Rental Request Page -->
+    <navigation-rule>
+        <from-view-id>/rental-request.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{transactionController.request}</from-action>
+            <if>#{not facesContext.isValidationFailed()}</if>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>request</from-outcome>
+            <to-view-id>/rental-request.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>cancel</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+</faces-config>

@@ -1,0 +1,22 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="rentalapp:war exploded">
+    <output-path>$PROJECT_DIR$/target/rentalapp-1.0-SNAPSHOT-exploded.war</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="rentalapp" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: joda-time:joda-time:2.7" />
+          <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.3.2" />
+          <element id="library" level="project" name="Maven: org.omnifaces:omnifaces:2.0" />
+          <element id="library" level="project" name="Maven: org.primefaces:primefaces:5.2" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/target/rentalapp-1.0-SNAPSHOT-exploded.war/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="rentalapp/web/Web" />
+    </root>
+  </artifact>
+</component>

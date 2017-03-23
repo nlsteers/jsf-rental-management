@@ -1,0 +1,59 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        template="templates/base.xhtml">
+    <ui:param name="pageTitle" value="Members"/>
+
+    <ui:define name="content">
+
+        <!-- MEMBER VIEW -->
+        <p:growl id="ui-messages" globalOnly="true"/>
+
+        <div style="width: 100%; float: left;">
+            <h3>Member manager</h3>
+            <hr/>
+            <h:form>
+                <h:panelGrid columns="3">
+                    <p:outputLabel for="lastName" value="Search by last name: "/>
+                    <p:inputText id="lastName" value="#{searchMembers.lastName}" navigator="true"
+                                 converterMessage="Please enter a name.">
+                    </p:inputText>
+                    <p:message for="lastName"/>
+                    <p:button value="New Member" outcome="member-edit"/>
+                </h:panelGrid>
+            </h:form>
+            <h:form id="frmMembers">
+                <p:dataTable value="#{searchedLastName}" var="m" rows="15" paginator="true">
+                    <p:column>
+                        <f:facet name="header">Member No.</f:facet>
+                        <p:link value="#{m.memberNo}" outcome="member-edit">
+                            <f:param name="memberNumber" value="#{m.memberNo}"/>
+                        </p:link>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">First Name</f:facet>
+                        #{m.firstName}
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Last Name</f:facet>
+                        #{m.lastName}
+                    </p:column>
+                    <p:column width="80" style="text-align: center">
+                        <p:commandButton action="#{memberController.remove(m)}" icon="ui-icon-trash"
+                                         update="@form :ui-messages"
+                                         style="width: 24px; height: 24px">
+                            <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>

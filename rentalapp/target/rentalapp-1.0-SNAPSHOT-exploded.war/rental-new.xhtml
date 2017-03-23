@@ -1,0 +1,47 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        template="templates/base.xhtml">
+    <ui:param name="pageTitle" value="New Rental"/>
+
+    <!-- RENTAL NEW VIEW -->
+    <ui:define name="content">
+        <f:metadata>
+            <f:viewParam name="transactionNumber" value="#{editTransactions.transactionNumber}"/>
+            <f:event type="preRenderView" listener="#{transactionController.preRenderViewEvent}"/>
+        </f:metadata>
+
+        <h:form id="frmTransaction">
+            <p:panelGrid columns="2">
+
+                <p:outputLabel for="transactionNumber" value="Transaction Number" style="visibility: hidden"/>
+                <p:inputText id="transactionNumber" value="#{editTransactions.transaction.transactionNo}" readonly="true" style="visibility: hidden"/>
+
+                <p:outputLabel for="itemNumber" value="Select an available Item"/>
+                <p:selectOneListbox id="itemNumber" value="#{editTransactions.transaction.itemNo}">
+                    <f:selectItems value="#{transactionController.itemNamesAndNumbers}"/>
+                </p:selectOneListbox>
+
+                <p:outputLabel value="Request unavailable items"/>
+                <p:button outcome="request" value="Request" icon="ui-icon-refresh" />
+
+                <p:outputLabel for="memberNumber" value="Select a Member"/>
+                <p:selectOneListbox id="memberNumber" value="#{editTransactions.transaction.memberNo}">
+                    <f:selectItems value="#{transactionController.userNamesAndNumbers}"/>
+                </p:selectOneListbox>
+
+                <p:outputLabel for="transactionDate" value="Transaction Date"/>
+                <p:calendar id="transactionDate" value="#{editTransactions.transaction.transactionDate}"
+                            pattern="dd/MM/yyyy" navigator="true">
+                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                </p:calendar>
+
+                <p:commandButton action="#{transactionController.save}" value="Save" icon="ui-icon-check" />
+                <p:button outcome="cancel" value="Cancel" icon="ui-icon-close" />
+            </p:panelGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>
