@@ -12,8 +12,9 @@ import java.util.Date;
 
 @Entity
 public class Transaction implements Serializable {
+    // These annotated variables create the database tables
 
-    @Id
+    @Id //primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "transaction_no")
     private Integer transactionNo;

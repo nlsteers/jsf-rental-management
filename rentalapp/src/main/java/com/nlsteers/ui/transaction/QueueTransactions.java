@@ -9,8 +9,12 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * Created by nlsteers on 13/02/2017.
+ * Created by nlsteers on 20/02/2017.
  * DAAODSAA
+ *
+ * Sessions scoped injected bean, session scoped for use only on the rental-view view.
+ *
+ * This class manages the queue of transactions
  */
 
 

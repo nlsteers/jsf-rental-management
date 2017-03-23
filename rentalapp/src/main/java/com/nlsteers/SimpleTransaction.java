@@ -3,6 +3,8 @@ package com.nlsteers;
 /**
  * Created by nlsteers on 07/02/2017.
  * DAAODSAA
+ *
+ * Simple transaction class, used by the transactionController
  */
 
 public class SimpleTransaction {

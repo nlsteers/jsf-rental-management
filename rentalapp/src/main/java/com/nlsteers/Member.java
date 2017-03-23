@@ -13,8 +13,9 @@ import java.util.Date;
 
 @Entity
 public class Member implements Serializable {
+    // These annotated variables create the database tables
 
-    @Id
+    @Id //primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_no")
     private Integer memberNo;

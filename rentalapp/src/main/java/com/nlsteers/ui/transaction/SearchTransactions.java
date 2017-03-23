@@ -6,8 +6,12 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Created by nlsteers on 13/02/2017.
+ * Created by nlsteers on 10/02/2017.
  * DAAODSAA
+ *
+ * Session scoped injected bean, session scoped for use across the users session to persist search details.
+ *
+ * This class allows for searching of transactions in the index view
  */
 
 

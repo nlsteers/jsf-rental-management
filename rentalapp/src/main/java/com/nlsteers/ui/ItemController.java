@@ -8,7 +8,7 @@ import com.nlsteers.ui.item.SearchItems;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ViewScoped;
+
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -19,39 +19,40 @@ import java.util.List;
  * * Created by nlsteers on 07/02/2017.
  * DAAODSAA
  */
-@ViewScoped
+@RequestScoped
 @Named
 public class ItemController {
+    @Inject
+    ItemDAO itemDAO; // Inject the item data access object
 
     @Inject
-    ItemDAO itemDAO;
+    SearchItems searchItems; // Inject the search params
 
     @Inject
-    SearchItems searchItems;
+    EditItems editItems; // Inject the update/create params
 
-    @Inject
-    EditItems editItems;
+    private List<Item> itemsList; // Initial constructor for the items data table
 
-    public void save() {
+    public void save() { // Saves an item
         itemDAO.merge(editItems.getItem());
         FacesContext context = FacesContext.getCurrentInstance();
         context.getExternalContext().getFlash().setKeepMessages(true);
         context.addMessage(null, new FacesMessage("Successfully created/edited item " + editItems.getItem().getItemName()));
     }
 
-    public void remove(Item item) {
+    public void remove(Item item) { // Removes an item
         itemDAO.remove(item);
         FacesContext.getCurrentInstance()
                 .addMessage(null, new FacesMessage("Successfully deleted item " + item.getItemNo() + " " + item.getItemName()));
     }
 
-    public void preRenderViewEvent() {
+    public void preRenderViewEvent() { //Initialise the view
         if (editItems.getItem() == null) {
             initializeItem();
         }
     }
 
-    private void initializeItem() {
+    private void initializeItem() { // Initialise the item object
         if (editItems.getItemNumber() == null) {
             editItems.setItem(new Item());
             return;
@@ -61,53 +62,32 @@ public class ItemController {
     }
 
 
-    public List<Item> getItemByName(){
-        System.out.println(searchItems.getItemName());
-        return itemDAO.queryItemName(searchItems.getItemName());
+    public void loadItems(){
+        itemsList = itemDAO.queryAll();
+    } //populates the data table
+
+    public void getItemByName(){ // Filters the table by name search
+        if (searchItems.getItemName() == null || searchItems.getItemName().equals("")) {
+            itemsList = itemDAO.queryAll();
+        } else {
+            itemsList = itemDAO.queryItemName(searchItems.getItemName());
+        }
     }
 
 
-    public List<Item> getItemByNumber(){
-        System.out.println(searchItems.getItemNumber());
-        return itemDAO.queryItemNumber(searchItems.getItemNumber());
+    public void getItemByNumber(){ // Filters the table by Number search
+        if (searchItems.getItemNumber() == null || searchItems.getItemNumber() == 0) {
+            itemsList = itemDAO.queryAll();
+        } else {
+            itemsList = itemDAO.queryItemNumber(searchItems.getItemNumber());
+        }
     }
 
 
     @Produces
     @Named
     public List<Item> getItems() {
-
-         /*if (searchItems.getItemType().equalsIgnoreCase("All") && searchItems.getItemNumber() == null && searchItems.getItemName() == null) {
-            return itemDAO.queryAll();
-        }*/
-
-        if (searchItems.getItemNumber() == null && searchItems.getItemName() == null) {
-            return itemDAO.queryAll();
-        }
-
-        if (searchItems.getItemNumber() == 0 && searchItems.getItemName().equals("")) {
-            return itemDAO.queryAll();
-        }
-
-        if (!searchItems.getItemName().equals("")) {
-            return getItemByName();
-        }
-
-        if (searchItems.getItemNumber() > 0) {
-            return getItemByNumber();
-        }
-
-        else {
-            return itemDAO.queryAll();
-
-        }
-
-    }
-
-
-
-
-
-
+       return itemsList;
+    } // Named factory method for showing the data
 
 }

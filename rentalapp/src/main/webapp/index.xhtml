@@ -7,7 +7,7 @@
         template="templates/base.xhtml">
     <ui:param name="pageTitle" value="Rentals"/>
     <ui:define name="content">
-
+        <!-- DEFAULT VIEW -->
         <p:growl id="ui-messages" globalOnly="true" showDetail="true"/>
 
 
@@ -25,6 +25,8 @@
                     </p:calendar>
                     <p:message for="transactionDate"/>
                     <p:button value="New Rental" outcome="rental-new"/>
+                    <p:button value="Rental Queue" outcome="rental-view"/>
+
                 </h:panelGrid>
             </h:form>
 

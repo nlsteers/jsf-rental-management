@@ -31,35 +31,35 @@ import java.util.List;
 public class MemberController {
 
     @Inject
-    MemberDAO memberDAO;
+    MemberDAO memberDAO; //Inject the member data access object
 
     @Inject
-    SearchMembers searchMembers;
+    SearchMembers searchMembers; // Inject the search params for member
 
     @Inject
-    EditMembers editMembers;
+    EditMembers editMembers; // Inject the edit params
 
-    public void save() {
+    public void save() { // saves a member
         memberDAO.merge(editMembers.getMember());
         FacesContext context = FacesContext.getCurrentInstance();
         context.getExternalContext().getFlash().setKeepMessages(true);
                 context.addMessage(null, new FacesMessage("Successfully created/edited member " + editMembers.getMember().getFirstName() + " " + editMembers.getMember().getLastName()));
     }
 
-    public void remove(Member mem) {
+    public void remove(Member mem) { // Removes a member
         memberDAO.remove(mem);
         FacesContext.getCurrentInstance()
                 .addMessage(null, new FacesMessage("Successfully deleted member " + mem.getFirstName() + " " + mem.getLastName()));
 
     }
 
-    public void preRenderViewEvent() {
+    public void preRenderViewEvent() { //Initialise the member view
         if (editMembers.getMember() == null) {
             initializeMember();
         }
     }
 
-    private void initializeMember() {
+    private void initializeMember() { // Initialise the member object
         if (editMembers.getMemberNumber() == null) {
             editMembers.setMember(new Member());
             return;
@@ -70,7 +70,7 @@ public class MemberController {
 
     @Produces
     @Named
-    public List<Member> getSearchedLastName() {
+    public List<Member> getSearchedLastName() { // Searches based on last name
         if (searchMembers.getLastName() == null || searchMembers.getLastName().equals("")) {
             return memberDAO.queryAll();
         } else {

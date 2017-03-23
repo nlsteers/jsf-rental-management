@@ -5,39 +5,32 @@
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:p="http://primefaces.org/ui"
         template="templates/base.xhtml">
-    <ui:param name="pageTitle" value="New Rental"/>
+    <ui:param name="pageTitle" value="Rental Queue"/>
 
     <ui:define name="content">
-        <f:metadata>
-            <f:viewParam name="transactionNumber" value="#{editTransactions.transactionNumber}"/>
-            <f:event type="preRenderView" listener="#{transactionController.preRenderViewEvent}"/>
-        </f:metadata>
+        <!-- QUEUE VIEW -->
+        <h:form id="frmTransactions">
+            <p:dataTable value="#{transactionsQueue}" var="t" rows="15" paginator="true">
+                <p:column>
+                    <f:facet name="header">Transaction No.</f:facet>
+                    #{t.transactionNo}
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Item No.</f:facet>
+                    #{t.itemNo}
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Member No.</f:facet>
+                    #{t.memberNo}
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Queue Date</f:facet>
+                    <h:outputText value="#{t.transactionDate}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </p:column>
 
-        <h:form id="frmTransaction">
-            <p:panelGrid columns="2">
-
-                <p:outputLabel for="transactionNumber" value="Transaction Number"/>
-                <p:inputText id="transactionNumber" value="#{editTransactions.transaction.transactionNo}" readonly="true"/>
-
-                <p:outputLabel for="itemNumber" value="Select an Item"/>
-                <p:selectOneListbox id="itemNumber" value="#{editTransactions.transaction.itemNo}">
-                    <f:selectItems value="#{transactionController.itemNamesAndNumbers}"/>
-                </p:selectOneListbox>
-
-                <p:outputLabel for="memberNumber" value="Select a Member"/>
-                <p:selectOneListbox id="memberNumber" value="#{editTransactions.transaction.memberNo}">
-                    <f:selectItems value="#{transactionController.userNamesAndNumbers}"/>
-                </p:selectOneListbox>
-
-                <p:outputLabel for="transactionDate" value="Transaction Date"/>
-                <p:calendar id="transactionDate" value="#{editTransactions.transaction.transactionDate}"
-                            pattern="dd/MM/yyyy" navigator="true">
-                    <f:convertDateTime pattern="dd/MM/yyyy"/>
-                </p:calendar>
-
-                <p:commandButton action="#{transactionController.save}" value="Save" icon="ui-icon-check" />
-                <p:button outcome="cancel" value="Cancel" icon="ui-icon-close" />
-            </p:panelGrid>
+            </p:dataTable>
         </h:form>
     </ui:define>
 </ui:composition>

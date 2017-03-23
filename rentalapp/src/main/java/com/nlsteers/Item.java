@@ -13,8 +13,8 @@ import java.io.Serializable;
 
 @Entity
 public class Item implements Serializable {
-
-    @Id
+    // These annotated variables create the database tables
+    @Id //primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "item_no")
     private Integer itemNo;

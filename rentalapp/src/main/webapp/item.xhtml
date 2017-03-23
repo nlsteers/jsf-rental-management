@@ -9,25 +9,18 @@
 
     <ui:define name="content">
 
+        <!-- ITEM VIEW -->
         <p:growl id="ui-messages" globalOnly="true"/>
 
         <div style="width: 100%; float: left;">
             <h3>Item manager</h3>
             <hr/>
-            <!--<h:form>
-                <p:panelGrid columns="3">
-                    <p:outputLabel for="itemType" value="Item Type:"/>
-                    <p:selectOneListbox id="itemType" value="#{searchItems.itemType}">
-                        <f:selectItem itemLabel="All" itemValue="All"/>
-                        <f:selectItem itemLabel="Book" itemValue="Book"/>
-                        <f:selectItem itemLabel="TV" itemValue="TV"/>
-                        <f:selectItem itemLabel="Music" itemValue="Music"/>
-                        <f:selectItem itemLabel="Film" itemValue="Film"/>
-                        <f:selectItem itemLabel="Game" itemValue="Game"/>
-                    </p:selectOneListbox>
-                    <p:commandButton value="Search" update=":frmItems"/>
-                </p:panelGrid>
-            </h:form>-->
+
+            <p:panelGrid columns="3">
+                <p:commandButton value="Load Data" action="#{itemController.loadItems}" update=":frmItems"/>
+                <p:commandButton value="Clear Search" action="#{itemController.loadItems}" update=":frmItems"/>
+                <p:button value="New Item" outcome="item-edit"/>
+            </p:panelGrid>
 
             <h:form>
                 <p:panelGrid columns="3">
@@ -45,13 +38,9 @@
                 </p:panelGrid>
             </h:form>
 
-            <p:panelGrid columns="1">
-                <p:button value="New Item" outcome="item-edit"/>
-            </p:panelGrid>
-
             <h:form id="frmItems">
 
-                <p:dataTable value="#{items}" var="i" rows="15" paginator="true">
+                <p:dataTable value="#{itemController.items}" var="i" rows="15" paginator="true">
                     <p:column>
                         <f:facet name="header">Item No.</f:facet>
                         <h:link value="#{i.itemNo}" outcome="item-edit">

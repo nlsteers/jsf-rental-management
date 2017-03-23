@@ -35,11 +35,6 @@ public class TransactionDAO {
         return entityManager.merge(t);
     }
 
-    /*
-    public void persist(Transaction t) {
-        entityManager.persist(t);
-    }
-    */
 
     // Removes a transaction
     public void remove(Transaction t) {

@@ -89,7 +89,7 @@ public class ItemDAO {
     // Returns a set of Items based on the Item name
     public List<Item> queryItemName(String itemName) {
         TypedQuery<Item> query = entityManager
-                .createQuery("select e from Item e where e.itemName like :itemName ", Item.class);
+                .createQuery("select e from Item e where upper(e.itemName) = upper(:itemName)", Item.class);
         query.setParameter("itemName", itemName);
         return query.getResultList();
     }

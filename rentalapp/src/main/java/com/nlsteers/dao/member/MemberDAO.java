@@ -31,11 +31,6 @@ public class MemberDAO {
         return entityManager.merge(member);
     }
 
-    /*
-    public void persist(Member member) {
-        entityManager.persist(member);
-    }
-    */
 
     // Removes a Member
     public void remove(Member member) {

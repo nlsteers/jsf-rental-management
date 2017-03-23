@@ -92,7 +92,7 @@ public class TransactionController {
 
     private int checkForDoubles() {
 
-        List<SimpleTransaction> simpleTransactions = new ArrayList<SimpleTransaction>();
+        List<SimpleTransaction> simpleTransactions = new ArrayList<SimpleTransaction>(); //use simple transactions to prevent unique field like transaction number from interfering
 
         //create a list of simple transactions that contain
         for (Transaction t : transactionDAO.queryLastSevenDays()) {
@@ -111,7 +111,7 @@ public class TransactionController {
 
             if (st.getItemNo().equals(stToAdd.getItemNo()) && st.getMemberNo().equals(stToAdd.getMemberNo())) {
                 System.out.println("There are duplicates.");
-                return -1;
+                return -1; // return -1 if there are duplicates
             }
         }
         return 0;
@@ -131,11 +131,11 @@ public class TransactionController {
             simpleTransactions.add(new SimpleTransaction(q.getItemNo(), q.getMemberNo()));
         }
 
-        Integer memberToSearch = editTransactions.getTransaction().getMemberNo();
+        Integer memberToSearch = editTransactions.getTransaction().getMemberNo(); // member transaction to check against set
 
         int i = 0;
 
-        for (SimpleTransaction st : simpleTransactions) {
+        for (SimpleTransaction st : simpleTransactions) { //check for five increment loop
             if (memberToSearch.equals(st.getMemberNo())) {
                 i++;
                 if (i == 5) {
@@ -147,21 +147,20 @@ public class TransactionController {
     }
 
 
-    public void remove(Transaction t) {
-        Boolean dec = false;
-        itemDAO.queryUpdate(t.getItemNo(), dec);
+    public void remove(Transaction t) { // removes a transactions
+        itemDAO.queryUpdate(t.getItemNo(), false); //increment, not decrement
         transactionDAO.remove(t);
         FacesContext.getCurrentInstance()
-                .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Transaction deleted", "Successfully deleted transaction " + t.getTransactionNo()));
+                .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Transaction deleted", "Successfully deleted transaction " + t.getTransactionNo())); //success message
     }
 
-    public void preRenderViewEvent() {
+    public void preRenderViewEvent() { // Init the index view
         if (editTransactions.getTransaction() == null) {
             initializeTransaction();
         }
     }
 
-    private void initializeTransaction() {
+    private void initializeTransaction() { //Init a transaction object
         if (editTransactions.getTransactionNumber() == null) {
             editTransactions.setTransaction(new Transaction());
             return;
@@ -173,60 +172,73 @@ public class TransactionController {
 
     @Produces
     @Named
-    public List<Transaction> getTransactions() {
-        voidOldTransactions();
+    public List<Transaction> getTransactions() { //get the transactions for the data table
+        voidOldTransactions(); // check on every refresh for transactions that need voiding
         if (searchTransactions.getTransactionDate() == null) {
             return transactionDAO.queryAll();
         } else {
-            return transactionDAO.queryTransactionAfter(searchTransactions.getTransactionDate());
+            return transactionDAO.queryTransactionAfter(searchTransactions.getTransactionDate()); //search by date if one is supplied
         }
     }
 
-    private void voidOldTransactions() {
+    @Produces
+    @Named
+    public List<Transaction> getTransactionsQueue() { // show the current queue
+
+        List<Transaction> queue = new ArrayList<Transaction>();
+
+        for (Transaction q : queueTransactions.gettQ()) {
+            queue.add(q);
+        }
+
+        return queue;
+    }
+
+    private void voidOldTransactions() { // method to return items back from old transactions
         int x = -7;
         Calendar cal = GregorianCalendar.getInstance();
-        cal.add(Calendar.DAY_OF_YEAR, x);
+        cal.add(Calendar.DAY_OF_YEAR, x); //take 7 days from the current date
         Date sevenDays = cal.getTime();
-        List<Transaction> transactionList = transactionDAO.queryAll();
+        List<Transaction> transactionList = transactionDAO.queryAll(); //use all data
 
-        int i = 0;
+        int i = 0; //counter
 
         for (Transaction t : transactionList) {
-            if (t.getTransactionDate().compareTo(sevenDays) < 0 && t.getExpired() != 1) {
+            if (t.getTransactionDate().compareTo(sevenDays) < 0 && t.getExpired() != 1) { //check that this transaction is greater than 7 days old and has not been previously voided
                 i++;
-                System.out.println("There are " + i + " expired transactions that need attention");
+                System.out.println("There are " + i + " expired transactions that need attention"); //debug output
                 itemDAO.queryUpdate(t.getItemNo(), false); //increment the item count
-                t.setExpired(1); // This transaction has been voided
+                t.setExpired(1); // This transaction has been voided, don't increment this transaction again
                 transactionDAO.merge(t); // Save the transaction
             }
         }
     }
 
-    public List<SelectItem> getItemNamesAndNumbers() {
+    public List<SelectItem> getItemNamesAndNumbers() { //show item names on the rental-new view
 
         List<SelectItem> items = new ArrayList<SelectItem>();
         List<Item> itemList = itemDAO.queryAvailable();
-        for (Item item : itemList) {
+        for (Item item : itemList) { //iterate through the list
             items.add(new SelectItem(item.getItemNo(), item.getItemName()));
         }
         return items;
     }
 
-    public List<SelectItem> getUnavailableItemNamesAndNumbers() {
+    public List<SelectItem> getUnavailableItemNamesAndNumbers() { //show unavailable item names on the rental-request view
 
         List<SelectItem> items = new ArrayList<SelectItem>();
         List<Item> itemList = itemDAO.queryUnavailable();
-        for (Item item : itemList) {
+        for (Item item : itemList) { //iterate through the list
             items.add(new SelectItem(item.getItemNo(), item.getItemName()));
         }
         return items;
     }
 
-    public List<SelectItem> getUserNamesAndNumbers() {
+    public List<SelectItem> getUserNamesAndNumbers() { //show users names on rental-new and rental-request
 
         List<SelectItem> members = new ArrayList<SelectItem>();
         List<Member> memberList = memberDAO.queryAll();
-        for (Member member : memberList) {
+        for (Member member : memberList) { //construct a full name from the first and last names in the database
             String first = member.getFirstName();
             String last = member.getLastName();
             String name = first + " " + last;

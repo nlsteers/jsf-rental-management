@@ -3,6 +3,8 @@ package com.nlsteers;
 /**
  * Created by nlsteers on 07/02/2017.
  * DAAODSAA
+ *
+ * Simple Item class, not in use (currently!)
  */
 
 public class SimpleItem {
