@@ -1,7 +1,6 @@
 package com.nlsteers.ui;
 
 import com.nlsteers.Item;
-import com.nlsteers.SimpleItem;
 import com.nlsteers.dao.item.ItemDAO;
 import com.nlsteers.ui.item.EditItems;
 import com.nlsteers.ui.item.SearchItems;
@@ -9,6 +8,7 @@ import com.nlsteers.ui.item.SearchItems;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -19,7 +19,7 @@ import java.util.List;
  * * Created by nlsteers on 07/02/2017.
  * DAAODSAA
  */
-@RequestScoped
+@ViewScoped
 @Named
 public class ItemController {
 
@@ -31,7 +31,6 @@ public class ItemController {
 
     @Inject
     EditItems editItems;
-
 
     public void save() {
         itemDAO.merge(editItems.getItem());
@@ -62,18 +61,51 @@ public class ItemController {
     }
 
 
+    public List<Item> getItemByName(){
+        System.out.println(searchItems.getItemName());
+        return itemDAO.queryItemName(searchItems.getItemName());
+    }
+
+
+    public List<Item> getItemByNumber(){
+        System.out.println(searchItems.getItemNumber());
+        return itemDAO.queryItemNumber(searchItems.getItemNumber());
+    }
+
+
     @Produces
     @Named
     public List<Item> getItems() {
-        if (searchItems.getItemType() == null) {
+
+         /*if (searchItems.getItemType().equalsIgnoreCase("All") && searchItems.getItemNumber() == null && searchItems.getItemName() == null) {
             return itemDAO.queryAll();
-        } else if (searchItems.getItemType().equalsIgnoreCase("All")) {
+        }*/
+
+        if (searchItems.getItemNumber() == null && searchItems.getItemName() == null) {
             return itemDAO.queryAll();
         }
+
+        if (searchItems.getItemNumber() == 0 && searchItems.getItemName().equals("")) {
+            return itemDAO.queryAll();
+        }
+
+        if (!searchItems.getItemName().equals("")) {
+            return getItemByName();
+        }
+
+        if (searchItems.getItemNumber() > 0) {
+            return getItemByNumber();
+        }
+
         else {
-            return itemDAO.queryItemType(searchItems.getItemType());
+            return itemDAO.queryAll();
+
         }
+
     }
+
+
+
 
 
 

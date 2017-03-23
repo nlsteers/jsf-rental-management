@@ -5,7 +5,7 @@
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:p="http://primefaces.org/ui"
         template="templates/base.xhtml">
-    <ui:param name="pageTitle" value="New Rental"/>
+    <ui:param name="pageTitle" value="Request Rental"/>
 
     <ui:define name="content">
         <f:metadata>
@@ -19,13 +19,11 @@
                 <p:outputLabel for="transactionNumber" value="Transaction Number" style="visibility: hidden"/>
                 <p:inputText id="transactionNumber" value="#{editTransactions.transaction.transactionNo}" readonly="true" style="visibility: hidden"/>
 
-                <p:outputLabel for="itemNumber" value="Select an available Item"/>
+                <p:outputLabel for="itemNumber" value="Select an Item"/>
                 <p:selectOneListbox id="itemNumber" value="#{editTransactions.transaction.itemNo}">
-                    <f:selectItems value="#{transactionController.itemNamesAndNumbers}"/>
+                    <f:selectItems value="#{transactionController.unavailableItemNamesAndNumbers}"/>
                 </p:selectOneListbox>
 
-                <p:outputLabel value="Request unavailable items"/>
-                <p:button outcome="request" value="Request" icon="ui-icon-refresh" />
 
                 <p:outputLabel for="memberNumber" value="Select a Member"/>
                 <p:selectOneListbox id="memberNumber" value="#{editTransactions.transaction.memberNo}">
@@ -38,7 +36,7 @@
                     <f:convertDateTime pattern="dd/MM/yyyy"/>
                 </p:calendar>
 
-                <p:commandButton action="#{transactionController.save}" value="Save" icon="ui-icon-check" />
+                <p:commandButton action="#{transactionController.request}" value="Save" icon="ui-icon-check" />
                 <p:button outcome="cancel" value="Cancel" icon="ui-icon-close" />
             </p:panelGrid>
         </h:form>

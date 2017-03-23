@@ -7,6 +7,8 @@ import java.io.Serializable;
  * Item JPA entity.
  * Created by nlsteers on 07/02/2017.
  * DAAODSAA
+ *
+ * Item class.
  */
 
 @Entity

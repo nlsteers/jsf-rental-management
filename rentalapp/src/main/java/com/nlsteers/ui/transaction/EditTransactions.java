@@ -6,8 +6,12 @@ import javax.inject.Named;
 import java.io.Serializable;
 
 /**
- * Created by nlsteers on 26/02/2017.
+ * Created by nlsteers on 20/02/2017.
  * DAAODSAA
+ *
+ * View scoped injected bean, view scoped for use only on the rental-new and rental-request views.
+ *
+ * This class gets and sets Members from the rental-new and rental-request views of the app
  */
 
 @ViewScoped

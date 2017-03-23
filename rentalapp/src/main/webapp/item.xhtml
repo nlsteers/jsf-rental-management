@@ -14,7 +14,7 @@
         <div style="width: 100%; float: left;">
             <h3>Item manager</h3>
             <hr/>
-            <h:form>
+            <!--<h:form>
                 <p:panelGrid columns="3">
                     <p:outputLabel for="itemType" value="Item Type:"/>
                     <p:selectOneListbox id="itemType" value="#{searchItems.itemType}">
@@ -25,10 +25,29 @@
                         <f:selectItem itemLabel="Film" itemValue="Film"/>
                         <f:selectItem itemLabel="Game" itemValue="Game"/>
                     </p:selectOneListbox>
-                    <p:commandButton value="Submit" update=":frmItems"/>
-                    <p:button value="New Item" outcome="item-edit"/>
+                    <p:commandButton value="Search" update=":frmItems"/>
+                </p:panelGrid>
+            </h:form>-->
+
+            <h:form>
+                <p:panelGrid columns="3">
+                    <p:outputLabel for="itemName" value="Item Name:"/>
+                    <p:inputText id="itemName" value="#{searchItems.itemName}"/>
+                    <p:commandButton value="Search" action="#{itemController.getItemByName}" update=":frmItems"/>
                 </p:panelGrid>
             </h:form>
+
+            <h:form>
+                <p:panelGrid columns="3">
+                    <p:outputLabel for="itemNumber" value="Item Number:"/>
+                    <p:inputText id="itemNumber" value="#{searchItems.itemNumber}"/>
+                    <p:commandButton value="Search" action="#{itemController.getItemByNumber}" update=":frmItems"/>
+                </p:panelGrid>
+            </h:form>
+
+            <p:panelGrid columns="1">
+                <p:button value="New Item" outcome="item-edit"/>
+            </p:panelGrid>
 
             <h:form id="frmItems">
 

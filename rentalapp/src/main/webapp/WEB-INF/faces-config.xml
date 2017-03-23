@@ -49,6 +49,33 @@
             <redirect/>
         </navigation-case>
         <navigation-case>
+            <from-outcome>request</from-outcome>
+            <to-view-id>/rental-request.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>cancel</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+
+    <!-- Rental Request Page -->
+    <navigation-rule>
+        <from-view-id>/rental-request.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{transactionController.request}</from-action>
+            <if>#{not facesContext.isValidationFailed()}</if>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>request</from-outcome>
+            <to-view-id>/rental-request.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
             <from-outcome>cancel</from-outcome>
             <to-view-id>/index.xhtml</to-view-id>
             <redirect/>

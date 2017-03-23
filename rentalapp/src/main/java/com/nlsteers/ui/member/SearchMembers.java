@@ -8,6 +8,10 @@ import java.util.Date;
 /**
  * Created by nlsteers on 10/02/2017.
  * DAAODSAA
+ *
+ * Session scoped injected bean, session scoped for use across the users session to persist search details.
+ *
+ * This class allows for searching of members in the member view
  */
 
 @SessionScoped

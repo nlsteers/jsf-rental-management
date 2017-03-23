@@ -7,10 +7,13 @@ import javax.inject.Named;
 import java.io.Serializable;
 
 /**
- * Created by nlsteers on 10/02/2017.
+ * Created by nlsteers on 20/02/2017.
  * DAAODSAA
+ *
+ * View scoped injected bean, view scoped for use only on the member-edit view.
+ *
+ * This class gets and sets Members from the member-edit view of the app
  */
-
 @ViewScoped
 @Named
 public class EditMembers implements Serializable{

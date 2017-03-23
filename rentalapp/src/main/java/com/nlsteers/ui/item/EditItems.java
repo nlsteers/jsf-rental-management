@@ -9,6 +9,10 @@ import java.io.Serializable;
 /**
  * Created by nlsteers on 20/02/2017.
  * DAAODSAA
+ *
+ * View scoped injected bean, view scoped for use only on the item-edit view.
+ *
+ * This class gets and sets Items from the item-edit view of the app
  */
 
 @ViewScoped

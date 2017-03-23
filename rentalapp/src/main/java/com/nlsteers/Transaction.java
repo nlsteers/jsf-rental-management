@@ -11,7 +11,7 @@ import java.util.Date;
  */
 
 @Entity
-public class Transaction implements Serializable{
+public class Transaction implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +28,8 @@ public class Transaction implements Serializable{
     @Temporal(TemporalType.DATE)
     private Date transactionDate;
 
+    @Column(name = "expired")
+    private Integer expired;
 
     public Integer getTransactionNo() {
         return transactionNo;
@@ -59,5 +61,13 @@ public class Transaction implements Serializable{
 
     public void setTransactionDate(Date transactionDate) {
         this.transactionDate = transactionDate;
+    }
+
+    public Integer getExpired() {
+        return expired;
+    }
+
+    public void setExpired(Integer expired) {
+        this.expired = expired;
     }
 }
